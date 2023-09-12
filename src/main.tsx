@@ -1,4 +1,5 @@
 import React from 'react';
+import dotenv from 'dotenv';
 import ReactDOM from 'react-dom/client';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
@@ -10,6 +11,7 @@ import './index.css';
 import rootSaga from './store/sagas';
 import reducer from './store/reducer';
 
+dotenv.config();
 const sagaMiddleware = createSagaMiddleware();
 
 // mount it on the Store
