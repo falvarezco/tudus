@@ -21,13 +21,15 @@ import {
 import { TodoItemType, ActionType } from './reducer';
 
 // Worker Sagas
-export function* todosRequested() {
+/*eslint-disable @typescript-eslint/no-explicit-any*/
+export function* todosRequested(): any {
   yield put({ type: LOADING_APP, payload: true });
   try {
     let todos: TodoItemType[] = [];
+    /*eslint-disable @typescript-eslint/no-explicit-any*/
     const docs = yield call(getDocuments)
     if (docs) {
-      docs.forEach((item) => {
+      docs.forEach((item: any) => {
         todos.push({  ...item.data(), id: item.id } as TodoItemType);
       });
       yield put({ type: RETRIEVAL_SUCCESS, payload: todos });

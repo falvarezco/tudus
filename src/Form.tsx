@@ -36,6 +36,7 @@ const Form: React.FC = () => {
         variant="outlined"
         value={todoText}
         //Add proper typing here
+        /*eslint-disable @typescript-eslint/no-explicit-any*/
         onChange={(e: any) => updateField(e)}
       />
       <Button
