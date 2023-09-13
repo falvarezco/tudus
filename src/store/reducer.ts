@@ -1,12 +1,12 @@
-import uniqid from 'uniqid';
-import { ADD_TODO, EDIT_TODO, DELETE_TODO } from './actionTypes';
+// import uniqid from 'uniqid';
+import { RETRIEVAL_SUCCESS, LOADING_APP } from './actionTypes';
 
 // For Later
 // SORT_TODOS
 // SEARCH_TODOS
 
 export type TodoItemType = {
-  id?: number;
+  id: string;
   todoText?: string;
   done: boolean;
 };
@@ -17,10 +17,12 @@ export type ActionType = {
 };
 
 export type StateType = {
+  loading: boolean,
   todos: TodoItemType[];
 };
 
 const initialState: StateType = {
+  loading: false,
   todos: [],
 };
 
@@ -29,28 +31,16 @@ const reducer = (
   { type, payload }: ActionType
 ) => {
   switch (type) {
-    case ADD_TODO:
-      const { todoText } = payload;
+    case LOADING_APP:
       return {
-        todos: [
-          ...state.todos,
-          {
-            id: uniqid(),
-            todoText,
-            done: false,
-          },
-        ],
+        ...state,
+        loading: payload,
+      }
+    case RETRIEVAL_SUCCESS:
+      return {
+        ...state,
+        todos: payload,
       };
-    case EDIT_TODO:
-      const stateCopy = { ...state };
-      const updatedTodos = stateCopy.todos.map((todo) =>
-        todo.id === payload.id ? { ...todo, done: payload.done } : todo
-      );
-      return { ...state, todos: updatedTodos };
-    case DELETE_TODO:
-      const newState = { ...state };
-      const newTodos = newState.todos.filter((todo) => todo.id !== payload.id);
-      return { ...state, todos: newTodos };
     default:
       return state;
   }
