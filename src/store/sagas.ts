@@ -26,7 +26,6 @@ export function* todosRequested() {
   try {
     let todos: TodoItemType[] = [];
     const docs = yield call(getDocuments)
-    console.log(docs)
     if (docs) {
       docs.forEach((item) => {
         todos.push({  ...item.data(), id: item.id } as TodoItemType);
