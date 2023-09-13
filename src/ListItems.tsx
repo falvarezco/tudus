@@ -58,7 +58,7 @@ const ListItems = ({ todoItems }: ListItemsProps) => {
               aria-label="edit"
               onClick={() => handItemAction(false, todo)}
             >
-             <ModeEditIcon />
+            <ModeEditIcon />
             </IconButton>
           </ListItemIcon>*/}
         </ListItem>
