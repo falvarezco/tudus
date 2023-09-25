@@ -1,11 +1,9 @@
-// import uniqid from 'uniqid';
 import { RETRIEVAL_SUCCESS, LOADING_APP } from './actionTypes';
-
-
 // For Later
 // SORT_TODOS
 // SEARCH_TODOS
 
+type AppActions = ActionType;
 
 export type TodoItemType = {
   id: string;
@@ -15,11 +13,9 @@ export type TodoItemType = {
 
 export interface ActionType {
   type: string;
-  /*eslint-disable @typescript-eslint/no-explicit-any*/
-  payload: any;
+  payload: object;
 }
 
-type AppActions = ActionType
 
 export type StateType = {
   loading: boolean,
@@ -30,11 +26,11 @@ const initialState: StateType = {
   loading: false,
   todos: [],
 };
-
+/*eslint-disable @typescript-eslint/no-explicit-any*/
 const reducer = (
   state: StateType = initialState,
   { type, payload }: AppActions,
-) => {
+): any => {
   switch (type) {
     case LOADING_APP:
       return {
