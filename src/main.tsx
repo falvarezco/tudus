@@ -14,7 +14,7 @@ const sagaMiddleware = createSagaMiddleware();
 
 // mount it on the Store
 const store = configureStore({
-  reducer,
+  reducer, 
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(sagaMiddleware),
 });

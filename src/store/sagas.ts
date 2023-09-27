@@ -20,18 +20,23 @@ import {
 } from './api';
 import { TodoItemType, ActionType } from './reducer';
 
+interface IDocSnapshot {
+  data: () => object;
+  id: string;
+}
 // Worker Sagas
-/*eslint-disable @typescript-eslint/no-explicit-any*/
-export function* todosRequested(): any {
+export function* todosRequested(): Generator<ActionType> {
   yield put({ type: LOADING_APP, payload: true });
   try {
     let todos: TodoItemType[] = [];
     /*eslint-disable @typescript-eslint/no-explicit-any*/
-    const docs = yield call(getDocuments)
+    const docs: any = yield call(getDocuments);
+
     if (docs) {
-      docs.forEach((item: any) => {
-        todos.push({  ...item.data(), id: item.id } as TodoItemType);
+      docs.forEach((item: IDocSnapshot) => {
+        todos.push({ ...item.data(), id: item.id } as TodoItemType);
       });
+
       yield put({ type: RETRIEVAL_SUCCESS, payload: todos });
       yield put({ type: LOADING_APP, payload: false });
     }
@@ -45,7 +50,7 @@ export function* todosRequested(): any {
 export function* addTodo(action: ActionType) {
   const { payload } = action;
   try {
-    yield call(addDocument, payload);
+    yield call(addDocument as any, payload);
     yield put({type: TODOS_REQUESTED})
   } catch(e) {
     console.error(e)
@@ -55,7 +60,7 @@ export function* addTodo(action: ActionType) {
 export function* deleteTodo(action: ActionType) {
   const { payload } = action;
   try {
-    yield call(deleteDocument, payload);
+    yield call(deleteDocument as any, payload);
     yield put({type: TODOS_REQUESTED})
   } catch(e) {
     console.error(e)
@@ -65,7 +70,7 @@ export function* deleteTodo(action: ActionType) {
 export function* updateTodo(action: ActionType) {
   const { payload } = action;
   try {
-    yield call(updateDocument, payload);
+    yield call(updateDocument as any, payload);
     yield put({type: TODOS_REQUESTED})
   } catch(e) {
     console.error(e)

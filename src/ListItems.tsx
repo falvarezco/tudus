@@ -4,8 +4,6 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
-//import ListItemIcon from '@mui/material/ListItemIcon';
-//import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import Checkbox from '@mui/material/Checkbox';
 
 import { EDIT_TODO, DELETE_TODO } from './store/actionTypes';
@@ -24,6 +22,7 @@ const styles = {
 
 const ListItems = ({ todoItems }: ListItemsProps) => {
   const dispatch = useDispatch();
+  const todosIsEmpty = todoItems.length === 0;
 
   const handItemAction = (isDelete: boolean, todo: TodoItemType) =>
     isDelete && dispatch({ type: DELETE_TODO, payload: todo });
@@ -31,7 +30,8 @@ const ListItems = ({ todoItems }: ListItemsProps) => {
   const handleCheckItem = (todo: TodoItemType) =>
     dispatch({ type: EDIT_TODO, payload: { ...todo, done: !todo.done } });
 
-  return (
+  return todosIsEmpty ? <h3 style={{textAlign: 'center'}}>No Tudus to show</h3> 
+    : (
     <List>
       {todoItems.map((todo) => (
         <ListItem
@@ -52,15 +52,6 @@ const ListItems = ({ todoItems }: ListItemsProps) => {
             onChange={() => handleCheckItem(todo)}
           />
           <ListItemText primary={todo.todoText} />
-          {/*<ListItemIcon>
-            <IconButton
-              edge="end"
-              aria-label="edit"
-              onClick={() => handItemAction(false, todo)}
-            >
-            <ModeEditIcon />
-            </IconButton>
-          </ListItemIcon>*/}
         </ListItem>
       ))}
     </List>
